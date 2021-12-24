@@ -1,0 +1,109 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ;;Assume a 32-bit number in 40000004,add nibble4 and nib
+                       ble0 and store in 4000000C
+    2 00000000         
+    3 00000000         
+    4 00000000         
+    5 00000000         
+    6 00000000                 AREA             Nibble_add, CODE, READONLY
+    7 00000000                 ENTRY
+    8 00000000         START
+    9 00000000 E59F0020        LDR              R0, VALUE   ;load the address l
+                                                            ocation #0x40000004
+                                                             to R0 
+   10 00000004 E5901000        LDR              R1, [R0]    ;load the content o
+                                                            f R0 to R1
+   11 00000008 E59F201C        LDR              R2, MASK    ;load the mask valu
+                                                            e to R2---- R2 <- #
+                                                            0x0000000F
+   12 0000000C E0013002        AND              R3, R1, R2  ;AND with the mask 
+                                                            value so that only 
+                                                            nibble0 will be ava
+                                                            ilable
+   13 00000010 E1A02802        LSL              R2, #16     ;logial left shift 
+                                                            the mask value by 1
+                                                            6 bits, so it shift
+                                                            s to 4th nibble -> 
+                                                            #0x000F0000
+   14 00000014 E0014002        AND              R4, R1, R2  ;AND with new mask 
+                                                            value to get nibble
+                                                            4 
+   15 00000018 E1A04824        LSR              R4, #16     ;logical right shif
+                                                            t the nibble4 by 16
+                                                             bits to move the v
+                                                            alue to LSB
+   16 0000001C E0835004        ADD              R5, R3, R4  ;Adding the nibble0
+                                                             and nibble4
+   17 00000020 E59F0008        LDR              R0, RESULT  ;load the result ad
+                                                            dress to R0
+   18 00000024 E5805000        STR              R5,[R0]     ;Store the obtained
+                                                             answer in the resu
+                                                            lt location
+   19 00000028         
+   20 00000028         
+   21 00000028 40000004 
+                       VALUE   DCD              &40000004   ;location of the 32
+                                                            -bit number to 
+   22 0000002C 0000000F 
+                       MASK    DCD              &0000000F   ; mask value
+   23 00000030 4000000C 
+                       RESULT  DCD              &4000000C   ;location the resul
+                                                            t should be stored
+   24 00000034                 END
+Command Line: --debug --xref --diag_suppress=9931 --apcs=interwork --depend=.\o
+bjects\q1.d -o.\objects\q1.o -IC:\Keil_v5\ARM\RV31\INC -IC:\Keil_v5\ARM\CMSIS\I
+nclude --predefine="__EVAL SETA 1" --predefine="__UVISION_VERSION SETA 525" --l
+ist=.\listings\q1.lst q1.asm
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+MASK 0000002C
+
+Symbol: MASK
+   Definitions
+      At line 22 in file q1.asm
+   Uses
+      At line 11 in file q1.asm
+Comment: MASK used once
+Nibble_add 00000000
+
+Symbol: Nibble_add
+   Definitions
+      At line 6 in file q1.asm
+   Uses
+      None
+Comment: Nibble_add unused
+RESULT 00000030
+
+Symbol: RESULT
+   Definitions
+      At line 23 in file q1.asm
+   Uses
+      At line 17 in file q1.asm
+Comment: RESULT used once
+START 00000000
+
+Symbol: START
+   Definitions
+      At line 8 in file q1.asm
+   Uses
+      None
+Comment: START unused
+VALUE 00000028
+
+Symbol: VALUE
+   Definitions
+      At line 21 in file q1.asm
+   Uses
+      At line 9 in file q1.asm
+Comment: VALUE used once
+5 symbols
+337 symbols in table

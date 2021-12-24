@@ -1,0 +1,160 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ; Implement ASM program to add array of numbers present 
+                       at 4000 0004H only if it is positive, and store it in 40
+                       00 000CH
+    2 00000000         ;Let count value be at 4000 0000H
+    3 00000000                 AREA             PG2, CODE, READWRITE
+    4 00000000                 ENTRY
+    5 00000000         
+    6 00000000         START
+    7 00000000 E59F0038        LDR              R0, COUNT   ; load the count to
+                                                             R0
+    8 00000004 E5901000        LDR              R1, [R0]    ; load the content 
+                                                            of R0 to R1
+    9 00000008 E59F0034        LDR              R0, ARRAY   ; loading the start
+                                                             address of the arr
+                                                            ay
+   10 0000000C E5902000        LDR              R2, [R0]    ;load the value pre
+                                                            sent in start addre
+                                                            ss
+   11 00000010 E59F7030        LDR              R7, RESULT  ;load the address t
+                                                            o store the result
+   12 00000014         
+   13 00000014         LOOP1
+   14 00000014 E3510000        CMP              R1, #0      ;compare the number
+                                                             count with zero
+   15 00000018 0A000007        BEQ              STOP        ;if equal to zero g
+                                                            oto STOP
+   16 0000001C E5B03004        LDR              R3, [R0,#4]! ;loading the eleme
+                                                            nt to R3 and increm
+                                                            ent R0
+   17 00000020 E2411001        SUB              R1, R1, #1  ;Decrement the coun
+                                                            t by 1
+   18 00000024 E3530000        CMP              R3,#0       ;Compare for positi
+                                                            ve or negative
+   19 00000028 5A000000        BPL              LOOP2       ;if positive goto l
+                                                            oop2
+   20 0000002C EAFFFFF8        B                LOOP1       ; Branch in loop1
+   21 00000030         
+   22 00000030         
+   23 00000030         LOOP2
+   24 00000030 E0822003        ADD              R2, R2, R3  ;positive numbers a
+                                                            re added here
+   25 00000034 E5872000        STR              R2, [R7]    ; store the added s
+                                                            um to result
+   26 00000038 EAFFFFF5        B                LOOP1       ;branch in loop1
+   27 0000003C         
+   28 0000003C         
+   29 0000003C         
+   30 0000003C         STOP
+   31 0000003C EAFFFFFE        B                STOP        ;stop the execution
+                                                            
+   32 00000040         
+   33 00000040         
+   34 00000040         
+   35 00000040         
+   36 00000040 40000000 
+                       COUNT   DCD              &40000000
+   37 00000044 40000004 
+                       ARRAY   DCD              &40000004
+   38 00000048 40000030 
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+                       RESULT  DCD              &40000030
+   39 0000004C         
+   40 0000004C         
+   41 0000004C         
+   42 0000004C                 END
+Command Line: --debug --xref --diag_suppress=9931 --apcs=interwork --depend=.\o
+bjects\q2.d -o.\objects\q2.o -IC:\Keil_v5\ARM\RV31\INC -IC:\Keil_v5\ARM\CMSIS\I
+nclude --predefine="__EVAL SETA 1" --predefine="__UVISION_VERSION SETA 525" --l
+ist=.\listings\q2.lst q2.asm
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+ARRAY 00000044
+
+Symbol: ARRAY
+   Definitions
+      At line 37 in file q2.asm
+   Uses
+      At line 9 in file q2.asm
+Comment: ARRAY used once
+COUNT 00000040
+
+Symbol: COUNT
+   Definitions
+      At line 36 in file q2.asm
+   Uses
+      At line 7 in file q2.asm
+Comment: COUNT used once
+LOOP1 00000014
+
+Symbol: LOOP1
+   Definitions
+      At line 13 in file q2.asm
+   Uses
+      At line 20 in file q2.asm
+      At line 26 in file q2.asm
+
+LOOP2 00000030
+
+Symbol: LOOP2
+   Definitions
+      At line 23 in file q2.asm
+   Uses
+      At line 19 in file q2.asm
+Comment: LOOP2 used once
+PG2 00000000
+
+Symbol: PG2
+   Definitions
+      At line 3 in file q2.asm
+   Uses
+      None
+Comment: PG2 unused
+RESULT 00000048
+
+Symbol: RESULT
+   Definitions
+      At line 38 in file q2.asm
+   Uses
+      At line 11 in file q2.asm
+Comment: RESULT used once
+START 00000000
+
+Symbol: START
+   Definitions
+      At line 6 in file q2.asm
+   Uses
+      None
+Comment: START unused
+STOP 0000003C
+
+
+
+
+ARM Macro Assembler    Page 2 Alphabetic symbol ordering
+Relocatable symbols
+
+Symbol: STOP
+   Definitions
+      At line 30 in file q2.asm
+   Uses
+      At line 15 in file q2.asm
+      At line 31 in file q2.asm
+
+8 symbols
+340 symbols in table
